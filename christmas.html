@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>You're Flying to Berlin!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: system-ui, sans-serif;
+background: radial-gradient(circle at top, #ff4d4d 0, #7b001c 60%, #2b0010 100%);
+color: #fff8f0;
+height: 100vh;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.snow-overlay {
+position: fixed;
+inset: 0;
+pointer-events: none;
+background-image:
+radial-gradient(circle, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 55%),
+radial-gradient(circle, rgba(255,255,255,0.4) 0, rgba(255,255,255,0) 55%);
+background-size: 200px 200px, 260px 260px;
+background-position: 0 0, 120px 80px;
+animation: snowDrift 20s linear infinite;
+opacity: 0.4;
+}
+
+@keyframes snowDrift {
+0% { transform: translate3d(0, 0, 0); }
+100% { transform: translate3d(-80px, 80px, 0); }
+}
+
+.container {
+position: relative;
+text-align: center;
+padding: 2.5rem 1.5rem;
+max-width: 680px;
+border-radius: 24px;
+background: rgba(10, 0, 0, 0.65);
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+}
+
+.headline {
+font-size: clamp(2.2rem, 5vw, 3.2rem);
+font-weight: 800;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+margin-bottom: 0.5rem;
+}
+
+.highlight {
+color: #ffe066;
+text-shadow: 0 0 18px rgba(255, 224, 102, 0.7);
+}
+
+.subhead {
+font-size: 1.1rem;
+opacity: 0.9;
+margin-bottom: 1.8rem;
+}
+
+.details {
+font-size: 1rem;
+margin-bottom: 2rem;
+line-height: 1.5;
+opacity: 0.95;
+}
+
+/* Falling gift boxes */
+.gift {
+position: fixed;
+top: -80px;
+width: 46px;
+height: 46px;
+background: linear-gradient(135deg, #ff4d4d, #ff1c68);
+border-radius: 6px;
+box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+animation: fall linear;
+}
+
+.gift::before,
+.gift::after {
+content: "";
+position: absolute;
+background: rgba(255, 255, 255, 0.85);
+}
+
+.gift::before {
+width: 8px;
+height: 100%;
+left: 50%;
+transform: translateX(-50%);
+}
+
+.gift::after {
+height: 8px;
+width: 100%;
+top: 50%;
+transform: translateY(-50%);
+}
+
+@keyframes fall {
+0% { transform: translateY(-80px); opacity: 0; }
+10% { opacity: 1; }
+100% { transform: translateY(110vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+<div class="snow-overlay"></div>
+
+<div class="container">
+<h1 class="headline">
+YOU’RE FLYING TO <span class="highlight">BERLIN</span>
+</h1>
+
+<p class="subhead">
+Christmas magic just upgraded your travel plans.
+</p>
+
+<p class="details">
+Your gift isn’t under the tree — it’s waiting in Berlin.
+Get ready for Christmas markets, glowing lights, mulled wine,
+and a city that feels like a winter postcard.
+</p>
+</div>
+
+<script>
+function createGift() {
+const gift = document.createElement("div");
+gift.className = "gift";
+
+const size = 40 + Math.random() * 20;
+gift.style.width = size + "px";
+gift.style.height = size + "px";
+
+gift.style.left = Math.random() * 100 + "vw";
+gift.style.animationDuration = 6 + Math.random() * 6 + "s";
+
+document.body.appendChild(gift);
+
+setTimeout(() => gift.remove(), 12000);
+}
+
+setInterval(() => {
+if (document.querySelectorAll(".gift").length < 12) createGift();
+}, 800);
+
+for (let i = 0; i < 6; i++) {
+setTimeout(createGift, i * 400);
+}
+</script>
+</body>
+</html>
